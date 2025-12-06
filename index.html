@@ -130,7 +130,7 @@
             font-size: 0.9rem;
         }
 
-        /* Header & Navigation */
+        /* Header & Navigation - FIXED */
         header {
             position: sticky;
             top: 0;
@@ -650,19 +650,6 @@
                 display: flex;
             }
             
-            .mobile-menu .nav-links {
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-                margin-bottom: 20px;
-            }
-            
-            .mobile-menu .nav-buttons {
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
-            }
-            
             .features-grid,
             .tests-grid,
             .lessons-grid,
@@ -713,7 +700,7 @@
     </style>
 </head>
 <body>
-    <!-- Header & Navigation -->
+    <!-- Header & Navigation - FIXED VERSION -->
     <header>
         <div class="container">
             <nav class="navbar">
@@ -738,22 +725,6 @@
                     <i class="fas fa-bars"></i>
                 </div>
             </nav>
-            
-            <!-- Mobile Menu (hidden by default) -->
-            <div class="mobile-menu" id="mobileMenu">
-                <div class="nav-links">
-                    <a href="#home">Home</a>
-                    <a href="#lessons">Lessons</a>
-                    <a href="#tests">Tests</a>
-                    <a href="#games">Games</a>
-                    <a href="#progress">Progress</a>
-                </div>
-                
-                <div class="nav-buttons">
-                    <a href="#login" class="btn btn-outline btn-small">Login</a>
-                    <a href="#signup" class="btn btn-primary btn-small">Sign Up</a>
-                </div>
-            </div>
         </div>
     </header>
 
@@ -776,8 +747,8 @@
                 </div>
             </div>
         </div>
-     </section>
-    
+    </section>
+
     <!-- Features Section -->
     <section>
         <div class="container">
@@ -799,7 +770,7 @@
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-gamepad"></i>
+                         <i class="fas fa-gamepad"></i>
                     </div>
                     <h3>Fun Typing Games</h3>
                     <p>Make typing practice enjoyable with our collection of engaging games designed to improve your skills.</p>
@@ -1086,11 +1057,36 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle - Fixed version
+        // Simple Mobile Menu Toggle
         const mobileToggle = document.getElementById('mobileToggle');
-        const mobileMenu = document.getElementById('mobileMenu');
+        const navLinks = document.querySelector('.nav-links');
+        const navButtons = document.querySelector('.nav-buttons');
         
         mobileToggle.addEventListener('click', () => {
+            // Create mobile menu if it doesn't exist
+            let mobileMenu = document.querySelector('.mobile-menu');
+            
+            if (!mobileMenu) {
+                mobileMenu = document.createElement('div');
+                mobileMenu.className = 'mobile-menu';
+                mobileMenu.innerHTML = `
+                    <div class="nav-links">
+                        <a href="#home">Home</a>
+                        <a href="#lessons">Lessons</a>
+                        <a href="#tests">Tests</a>
+                        <a href="#games">Games</a>
+                        <a href="#progress">Progress</a>
+                    </div>
+                    <div class="nav-buttons">
+                        <a href="#login" class="btn btn-outline btn-small">Login</a>
+                        <a href="#signup" class="btn btn-primary btn-small">Sign Up</a>
+                    </div>
+                `;
+                
+                document.querySelector('header .container').appendChild(mobileMenu);
+            }
+            
+            // Toggle menu
             mobileMenu.classList.toggle('active');
             
             // Change icon
@@ -1104,42 +1100,18 @@
             }
         });
         
-        // Close mobile menu when clicking a link
-        const mobileLinks = document.querySelectorAll('.mobile-menu a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            if (mobileMenu && mobileMenu.classList.contains('active') && 
+                !mobileMenu.contains(e.target) && 
+                !mobileToggle.contains(e.target)) {
                 mobileMenu.classList.remove('active');
                 const icon = mobileToggle.querySelector('i');
                 icon.classList.remove('fa-times');
                 icon.classList.add('fa-bars');
-            });
-        });
-        
-        // Animate progress bars on scroll
-        const observerOptions = {
-            threshold: 0.5
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const progressFill = entry.target.querySelector('.progress-fill');
-                    if (progressFill) {
-                        // Trigger animation by adding the width class
-                        // The width is already set in CSS, this just ensures it animates on scroll
-                        progressFill.style.width = progressFill.classList.contains('progress-beginner') ? '30%' : 
-                                                  progressFill.classList.contains('progress-intermediate') ? '60%' : '85%';
-                    }
-                }
-            });
-        }, observerOptions);
-        
-        // Observe lesson cards
-        const lessonCards = document.querySelectorAll('.lesson-card');
-        lessonCards.forEach(card => {
-            observer.observe(card);
+            }
         });
     </script>
 </body>
 </html>
-                    
