@@ -633,9 +633,8 @@
                 display: block;
             }
             
-            .mobile-menu.active {
-                display: flex;
-                flex-direction: column;
+            .mobile-menu {
+                display: none;
                 position: absolute;
                 top: 70px;
                 left: 0;
@@ -644,16 +643,21 @@
                 padding: 20px;
                 box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
                 z-index: 100;
+                flex-direction: column;
             }
             
-            .mobile-menu.active .nav-links {
+            .mobile-menu.active {
+                display: flex;
+            }
+            
+            .mobile-menu .nav-links {
                 display: flex;
                 flex-direction: column;
                 gap: 15px;
                 margin-bottom: 20px;
             }
             
-            .mobile-menu.active .nav-buttons {
+            .mobile-menu .nav-buttons {
                 display: flex;
                 flex-direction: column;
                 gap: 10px;
@@ -723,7 +727,6 @@
                     <a href="#tests">Tests</a>
                     <a href="#games">Games</a>
                     <a href="#progress">Progress</a>
-                    <a href="#themes">Themes</a>
                 </div>
                 
                 <div class="nav-buttons">
@@ -744,7 +747,6 @@
                     <a href="#tests">Tests</a>
                     <a href="#games">Games</a>
                     <a href="#progress">Progress</a>
-                    <a href="#themes">Themes</a>
                 </div>
                 
                 <div class="nav-buttons">
@@ -773,9 +775,9 @@
                     </div>
                 </div>
             </div>
-          </div>
-    </section>
-
+        </div>
+     </section>
+    
     <!-- Features Section -->
     <section>
         <div class="container">
@@ -1084,7 +1086,7 @@
     </footer>
 
     <script>
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle - Fixed version
         const mobileToggle = document.getElementById('mobileToggle');
         const mobileMenu = document.getElementById('mobileMenu');
         
@@ -1137,18 +1139,7 @@
         lessonCards.forEach(card => {
             observer.observe(card);
         });
-        
-        // Simple hover animation for cards
-        const cards = document.querySelectorAll('.feature-card, .test-card, .lesson-card, .game-card, .testimonial-card');
-        cards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                card.style.transform = 'translateY(-10px)';
-            });
-            
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0)';
-            });
-        });
     </script>
 </body>
 </html>
+                    
