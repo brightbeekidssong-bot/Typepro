@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypingPro - Master Your Typing Skills</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-blue: #2a85ff;
+            --light-blue: #e6f0ff;
+            --dark-blue: #1a5fcc;
+            --text-dark: #333;
+            --text-light: #666;
+            --background: #f8fafc;
+            --white: #ffffff;
+            --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --hover-shadow: 0 10px 25px rgba(42, 133, 255, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 50px;
+            color: var(--primary-blue);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(42, 133, 255, 0.2);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-blue);
+            border: 2px solid var(--primary-blue);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        /* Header & Navigation */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--white);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-blue);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e6f0ff 100%);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .hero-image {
+            text-align: center;
+        }
+
+        .keyboard-img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Feature Sections */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .feature-icon {
+            background-color: var(--light-blue);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .feature-icon i {
+            font-size: 2rem;
+            color: var(--primary-blue);
+        }
+
+        /* Test Cards */
+        .tests-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .test-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .test-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .test-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+        }
+
+        /* Lessons Section */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .lesson-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-blue);
+            border-radius: 5px;
+            width: 0;
+            transition: width 1.5s ease;
+        }
+
+        .progress-beginner {
+            width: 30%;
+        }
+
+        .progress-intermediate {
+            width: 60%;
+        }
+
+        .progress-advanced {
+            width: 85%;
+        }
+
+        /* Games Section */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .game-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .game-img {
+            height: 180px;
+            background-color: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-img i {
+            font-size: 3rem;
+            color: var(--primary-blue);
+        }
+
+        .game-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Progress Section */
+        .progress-container {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .stat-card {
+            background-color: var(--light-blue);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 5px;
+        }
+
+        .chart-placeholder {
+            height: 200px;
+            background-color: #f0f7ff;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .chart-placeholder i {
+            font-size: 3rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+        }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .user-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--light-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .user-img i {
+            font-size: 1.8rem;
+            color: var(--primary-blue);
+        }
+
+        .stars {
+            color: #ffc107;
+            margin: 10px 0;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            color: white;
+            text-align: center;
+            border-radius: var(--border-radius);
+            padding: 60px 40px;
+        }
+
+        .cta-section h2 {
+            color: white;
+        }
+
+        .cta-section p {
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .cta-buttons .btn-outline {
+            color: white;
+            border-color: white;
+        }
+
+        .cta-buttons .btn-outline:hover {
+            background-color: white;
+            color: var(--primary-blue);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a2e;
+            color: #b0b0b0;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer-links h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2d3748;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background-color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2d3748;
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-links-bottom {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .features-grid,
+            .tests-grid,
+            .lessons-grid,
+            .games-grid,
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .progress-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-buttons {
+                justify-content: center;
+            }
+            
+            .nav-links,
+            .nav-buttons {
+                display: none;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .mobile-menu.active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                z-index: 100;
+            }
+            
+            .mobile-menu.active .nav-links {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            
+            .mobile-menu.active .nav-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .features-grid,
+            .tests-grid,
+            .lessons-grid,
+            .games-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero {
+                padding: 70px 0;
+            }
+            
+            .btn {
+                padding: 12px 24px;
+                width: 100%;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-keyboard"></i>TypingPro
+                </a>
+                
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#lessons">Lessons</a>
+                    <a href="#tests">Tests</a>
+                    <a href="#games">Games</a>
+                    <a href="#progress">Progress</a>
+                    <a href="#themes">Themes</a>
+                </div>
+                
+                <div class="nav-buttons">
+                    <a href="#login" class="btn btn-outline btn-small">Login</a>
+                    <a href="#signup" class="btn btn-primary btn-small">Sign Up</a>
+                </div>
+                
+                <div class="mobile-toggle" id="mobileToggle">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+            
+            <!-- Mobile Menu (hidden by default) -->
+            <div class="mobile-menu" id="mobileMenu">
+                <div class="nav-links">
+                    <a href="#home">Home</a>
+                    <a href="#lessons">Lessons</a>
+                    <a href="#tests">Tests</a>
+                    <a href="#games">Games</a>
+                    <a href="#progress">Progress</a>
+                    <a href="#themes">Themes</a>
+                </div>
+                
+                <div class="nav-buttons">
+                    <a href="#login" class="btn btn-outline btn-small">Login</a>
+                    <a href="#signup" class="btn btn-primary btn-small">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Master Your Typing Skills for Free</h1>
+                    <p>Practice typing, take speed tests, play typing games and improve your WPM — all for free.</p>
+                    <div class="hero-buttons">
+                        <a href="#tests" class="btn btn-primary">Start Typing Test</a>
+                        <a href="#lessons" class="btn btn-outline">Take Lessons</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="keyboard-img">
+                        <i class="fas fa-keyboard" style="font-size: 15rem; color: var(--primary-blue);"></i>
+                    </div>
+                </div>
+            </div>
+          </div>
+    </section>
+
+    <!-- Features Section -->
+    <section>
+        <div class="container">
+            <h2>Why Use Our Typing Website?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Free Typing Lessons</h3>
+                    <p>Step-by-step lessons from beginner to advanced. Learn proper finger placement and typing techniques.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Speed & Accuracy Tests</h3>
+                    <p>Test your typing speed (WPM) and accuracy with our timed tests. Track your progress over time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Fun Typing Games</h3>
+                    <p>Make typing practice enjoyable with our collection of engaging games designed to improve your skills.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Typing Tests Section -->
+    <section id="tests" style="background-color: #f0f7ff;">
+        <div class="container">
+            <h2>Typing Tests</h2>
+            <div class="tests-grid">
+                <div class="test-card">
+                    <div class="test-icon">
+                        <i class="far fa-clock"></i>
+                    </div>
+                    <h3>1-Minute Test</h3>
+                    <p>Quick test to measure your typing speed. Perfect for a fast check of your WPM and accuracy.</p>
+                    <a href="#" class="btn btn-primary btn-small">Start Test</a>
+                </div>
+                <div class="test-card">
+                    <div class="test-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>3-Minute Test</h3>
+                    <p>Standard typing test duration. Get a more accurate measurement of your typing speed and accuracy.</p>
+                    <a href="#" class="btn btn-primary btn-small">Start Test</a>
+                </div>
+                <div class="test-card">
+                    <div class="test-icon">
+                        <i class="far fa-hourglass"></i>
+                    </div>
+                    <h3>5-Minute Test</h3>
+                    <p>Extended test to measure endurance and consistency. See how well you maintain speed over time.</p>
+                    <a href="#" class="btn btn-primary btn-small">Start Test</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lessons Section -->
+    <section id="lessons">
+        <div class="container">
+            <h2>Typing Lessons (Beginner → Advanced)</h2>
+            <div class="lessons-grid">
+                <div class="lesson-card">
+                    <h3>Beginner</h3>
+                    <p>Learn the basics of touch typing. Start with home row keys and build proper typing habits.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-beginner"></div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-small">Start Lesson</a>
+                </div>
+                <div class="lesson-card">
+                    <h3>Intermediate</h3>
+                    <p>Practice with more complex words and sentences. Improve your speed and accuracy.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-intermediate"></div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-small">Start Lesson</a>
+                </div>
+                <div class="lesson-card">
+                    <h3>Advanced</h3>
+                    <p>Master typing with numbers, symbols, and complex text. Reach professional typing speeds.</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill progress-advanced"></div>
+                    </div>
+                    <a href="#" class="btn btn-primary btn-small">Start Lesson</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" style="background-color: #f0f7ff;">
+        <div class="container">
+            <h2>Typing Games Preview</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-img">
+                        <i class="fas fa-user-ninja"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Keyboard Ninja</h3>
+                        <a href="#" class="btn btn-outline btn-small">Play Game</a>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-img">
+                        <i class="fas fa-frog"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Jump Typing</h3>
+                        <a href="#" class="btn btn-outline btn-small">Play Game</a>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-img">
+                        <i class="fas fa-cloud"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Type-a-Balloon</h3>
+                        <a href="#" class="btn btn-outline btn-small">Play Game</a>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="game-img">
+                        <i class="fas fa-crosshairs"></i>
+                    </div>
+                    <div class="game-info">
+                        <h3>Shooting Words</h3>
+                        <a href="#" class="btn btn-outline btn-small">Play Game</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progress">
+        <div class="container">
+            <h2>Progress & Statistics</h2>
+            <div class="progress-container">
+                <div>
+                    <h3>Track your daily WPM improvement!</h3>
+                    <p>Monitor your progress with detailed statistics and visual charts to see how your typing skills improve over time.</p>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value">52</div>
+                            <div class="stat-label">Avg WPM</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">94%</div>
+                            <div class="stat-label">Accuracy</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value">15h</div>
+                            <div class="stat-label">Time Typed</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-placeholder">
+                    <i class="fas fa-chart-line"></i>
+                    <p>Progress Chart (WPM Over Time)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section style="background-color: #f8fafc;">
+        <div class="container">
+            <h2>What Our Users Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="user-info">
+                        <div class="user-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4>Alex Johnson</h4>
+                            <p>Student</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"This website helped me improve my typing speed from 30 to 65 WPM in just one month. The lessons are well-structured and the games make practice fun!"</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="user-info">
+                        <div class="user-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4>Maria Garcia</h4>
+                            <p>Data Entry Specialist</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="far fa-star"></i>
+                    </div>
+                    <p>"As a professional, I needed to improve my typing accuracy. The tests and detailed feedback helped me identify my weak spots and work on them effectively."</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="user-info">
+                        <div class="user-img">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <h4>David Chen</h4>
+                            <p>Programmer</p>
+                        </div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"The typing games are not only fun but also highly effective. I've noticed a significant improvement in my coding speed since I started using TypingPro."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section>
+        <div class="container">
+            <div class="cta-section">
+                <h2>Start learning typing today — it's 100% free!</h2>
+                <p>Join thousands of users who have improved their typing skills with our free platform. No credit card required, no hidden fees.</p>
+                <div class="cta-buttons">
+                    <a href="#signup" class="btn btn-primary">Get Started</a>
+                    <a href="#tests" class="btn btn-outline">Take Speed Test</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-about">
+                    <div class="footer-logo">
+                        <i class="fas fa-keyboard"></i>TypingPro
+                    </div>
+                    <p>Master your typing skills with our free online platform. Practice typing, take tests, play games, and track your progress.</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#lessons">Lessons</a></li>
+                        <li><a href="#tests">Tests</a></li>
+                        <li><a href="#games">Games</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#guides">Typing Guides</a></li>
+                        <li><a href="#tips">Tips & Tricks</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#privacy">Privacy Policy</a></li>
+                        <li><a href="#terms">Terms of Service</a></li>
+                        <li><a href="#cookies">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 TypingPro. All rights reserved.</p>
+                <div class="footer-links-bottom">
+                    <a href="#privacy">Privacy</a>
+                    <a href="#terms">Terms</a>
+                    <a href="#sitemap">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            
+            // Change icon
+            const icon = mobileToggle.querySelector('i');
+            if (mobileMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Close mobile menu when clicking a link
+        const mobileLinks = document.querySelectorAll('.mobile-menu a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                const icon = mobileToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+        
+        // Animate progress bars on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressFill = entry.target.querySelector('.progress-fill');
+                    if (progressFill) {
+                        // Trigger animation by adding the width class
+                        // The width is already set in CSS, this just ensures it animates on scroll
+                        progressFill.style.width = progressFill.classList.contains('progress-beginner') ? '30%' : 
+                                                  progressFill.classList.contains('progress-intermediate') ? '60%' : '85%';
+                    }
+                }
+            });
+        }, observerOptions);
+        
+        // Observe lesson cards
+        const lessonCards = document.querySelectorAll('.lesson-card');
+        lessonCards.forEach(card => {
+            observer.observe(card);
+        });
+        
+        // Simple hover animation for cards
+        const cards = document.querySelectorAll('.feature-card, .test-card, .lesson-card, .game-card, .testimonial-card');
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
