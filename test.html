@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TypingPro – Typing Test</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --primary:#4a90e2;
+      --primary-dark:#357ABD;
+      --bg:#eef5ff;
+      --card:#ffffff;
+      --text:#1c1f26;
+      --muted:#6b7586;
+      --error:#e74c3c;
+      --success:#2ecc71;
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0; padding:0;
+    }
+
+    body{
+      font-family:'Inter',sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    nav{
+      background:white;
+      padding:12px 20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      box-shadow:0 2px 6px rgba(0,0,0,0.08);
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    nav .logo{
+      font-size:22px;
+      font-weight:700;
+      color:var(--primary-dark);
+    }
+
+    nav a{
+      margin-left:12px;
+      text-decoration:none;
+      color:var(--text);
+    }
+
+    main{
+      max-width:900px;
+      margin:40px auto;
+      padding:20px;
+    }
+
+    .card{
+      background:var(--card);
+      padding:20px;
+      border-radius:12px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .chip-row{
+      display:flex;
+      gap:8px;
+      margin-top:10px;
+    }
+
+    .chip{
+      padding:6px 14px;
+      border-radius:20px;
+      border:1px solid #bfc8d6;
+      cursor:pointer;
+      background:white;
+      font-size:13px;
+    }
+
+    .chip.active{
+      background:var(--primary);
+      border-color:var(--primary);
+      color:white;
+    }
+
+    .timer-box{
+      margin-top:12px;
+      font-size:18px;
+      font-weight:600;
+      color:var(--primary-dark);
+    }
+
+    #prompt{
+      margin-top:15px;
+      padding:16px;
+      background:#f7f8fa;
+      border-radius:10px;
+      min-height:140px;
+      max-height:260px;
+      overflow-y:auto;
+      line-height:1.7rem;
+      font-size:17px;
+    }
+
+    .correct{ color:var(--success); }
+    .incorrect{ color:var(--error); text-decoration:underline; }
+    .current-char{ background:rgba(74,144,226,0.28); }
+
+    textarea{
+      width:100%;
+      margin-top:16px;
+      padding:14px;
+      border-radius:8px;
+      border:1px solid #bfc8d6;
+      resize:none;
+      font-size:15px;
+      outline:none;
+      min-height:110px;
+    }
+
+    textarea:focus{
+      border-color:var(--primary);
+      box-shadow:0 0 0 2px rgba(74,144,226,0.2);
+    }
+
+    .btn-row{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+    }
+
+    button{
+      padding:10px 18px;
+      border:none;
+      cursor:pointer;
+      border-radius:6px;
+      font-size:14px;
+      font-weight:600;
+    }
+
+    #startBtn{ background:var(--primary); color:white; }
+    #resetBtn{ background:#dceaff; }
+
+    .stats{
+      margin-top:20px;
+      display:flex;
+      gap:12px;
+    }
+
+    .stat-box{
+      flex:1;
+      background:white;
+      padding:14px;
+      text-align:center;
+      border-radius:10px;
+      box-shadow:0 6px 20px rgba(0,0,0,0.06);
+    }
+
+    .stat-box strong{
+      font-size:22px;
+      display:block;
+      margin-top:6px;
+    }
+  </style>
+
+</head>
+<body>
+
+  <nav>
+    <div class="logo">TypingPro</div>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="#">Lessons</a>
+      <a href="tests.html">Tests</a>
+      <a href="#">Games</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="card">
+      <h1>Typing Speed Test</h1>
+
+      <div class="chip-row">
+        <button class="chip active" data-time="60">1 Minute</button>
+        <button class="chip" data-time="180">3 Minute</button>
+        <button class="chip" data-time="300">5 Minute</button>
+      </div>
+
+      <div class="timer-box">Time Left: <span id="timer">60</span>s</div>
+
+      <div id="prompt"></div>
+
+      <textarea id="input" placeholder="Press Start to begin..." disabled></textarea>
+
+      <div class="btn-row">
+        <button id="startBtn">Start Test</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+
+      <div class="stats">
+        <div class="stat-box">WPM <strong id="wpm">0</strong></div>
+        <div class="stat-box">Accuracy <strong id="accuracy">0%</strong></div>
+        <div class="stat-box">Errors <strong id="errors">0</strong></div>
+      </div>
+    </div>
+  </main>
+
+<script>
+
+// ================================
+// 1-MIN (55–65 words each)
+// ================================
+const passages1min = [
+"Typing is not just about speed; it’s about consistency and accuracy. When you practice daily, your fingers learn the exact position of each key. Over time your mind stops focusing on letters and starts forming words naturally. This muscle memory transforms a beginner into a confident typist with stable speed and improved accuracy.",
+"Improving typing speed requires balanced effort. Typing too fast causes mistakes, while typing too slow reduces efficiency. The best method is maintaining accuracy above ninety percent. Once accuracy becomes stable, your speed naturally increases without forcing your fingers to rush or lose control.",
+"The home row keys form the foundation of touch typing. Keeping your fingers lightly on these keys allows quick movement across the keyboard. This technique increases accuracy and flow. Practicing simple home row exercises builds strong typing habits before attempting advanced speed tests.",
+"A focused typing session boosts your performance significantly. Short tests help your brain recognize word patterns, making typing smoother. Regular practice also improves your ability to maintain accuracy while slowly increasing speed. Smooth rhythm matters more than rushing through text.",
+"Typing consistently sharpens concentration. When your fingers respond instantly to letters, both your confidence and speed increase. A one-minute test reveals your natural rhythm. Aim for smooth typing, fewer pauses, and controlled movements to see real improvement.",
+"Typing every day strengthens finger movement and improves muscle coordination. A few minutes of warm-up, combined with accuracy-focused practice, builds long-term growth. Instead of being fast immediately, focus on stable accuracy and smooth rhythm for best results.",
+"Every skilled typist once started slow. Repeating short paragraphs improves muscle memory and reduces hesitation. Speed comes naturally when accuracy is consistent. Build flow first—speed will follow.",
+"Proper posture is essential. Relaxed shoulders and straight wrists prevent tension, increasing speed and reducing errors. Comfortable hands move freely across keys, making typing smooth and controlled.",
+"Typing tests track progress by measuring accuracy and speed. If accuracy drops, you may be rushing. Slow down briefly to regain control. With time, your fingers learn patterns and move more confidently across the keyboard.",
+"Short tests improve coordination between your eyes, brain, and fingers. As this connection strengthens, typing becomes faster and more accurate. Regular practice builds automatic response and smoother flow.",
+"Typing requires patience and discipline. Daily practice, even for one minute, helps build strong habits. Small improvements over time create big results, turning average typists into confident and efficient ones.",
+"Daily typing strengthens finger muscles and improves recognition of word structures. Regular practice enhances productivity in studies, writing, and professional communication.",
+"Typing benefits everyone—students, professionals, and creators. It improves writing speed, reduces effort, and boosts productivity. Accuracy should come first; speed naturally follows once technique improves.",
+"A strong typist develops focus through consistent repetition. Short tests reveal weak letters and allow targeted improvement. Practice a little every day and your performance will grow steadily.",
+"Typing without looking at the keyboard feels difficult at first but becomes natural with repetition. Fingers eventually memorize key positions, allowing faster and more accurate typing. Routine practice creates strong muscle memory."
+];
+
+
+// ================================
+// 3-MIN (160–220 words each)
+// ================================
+const passages3min = [
+"Improving typing speed requires patience and daily practice. Many learners underestimate how important consistency is. The key to typing faster is maintaining rhythm rather than forcing speed. Over time your brain adapts to familiar patterns and begins predicting key placements automatically. When your hands know where each key is located, you no longer need to look at the keyboard. This allows faster typing with fewer mistakes. Beginners often type using only a few fingers, which limits long-term progress. Touch typing trains all fingers to work together, resulting in better accuracy and balanced speed. A three-minute typing test challenges your focus and endurance. Staying calm and typing steadily improves your score far more than rushing. Typing fast is essential for students, writers, programmers, and professionals. A strong typing speed boosts productivity, reduces strain, and helps complete tasks efficiently. But speed and accuracy must grow together to achieve real improvement.",
+"A three-minute typing test reveals your strengths and weaknesses clearly. Many beginners chase speed without realizing that accuracy is more important. Fewer mistakes mean smoother typing because you avoid unnecessary corrections. As you practice, your fingertips learn key positions naturally. This reduces the effort required to type each word. Over time, your brain begins to focus more on reading the passage than locating keys. Posture also plays a major role. Relaxed shoulders and steady breathing improve endurance during longer tests. When your hands stay relaxed, accuracy improves. With enough practice, your typing becomes smoother and more confident.",
+"Typing for three minutes tests both concentration and stamina. Short tests show peak speed, but longer tests reveal your true average ability. Your brain must maintain focus, read text quickly, and guide your fingers smoothly. Touch typing strengthens the connection between thought and movement. Your eyes begin reading ahead, predicting upcoming words. This anticipation makes typing faster and reduces hesitation. Longer passages expose weak letters or patterns you often mistype. Identifying these helps you improve through targeted exercises. Daily typing builds muscle memory, making your movements automatic and efficient.",
+"A three-minute typing session builds endurance and mental clarity. Short bursts cannot reveal real skill, but longer tests show your sustained performance. Your fingers must move in harmony with your thoughts. Many beginners slow down due to fatigue or loss of focus. This improves with practice as your mind learns to stay engaged for longer. Longer tests also reveal bad habits such as tensed shoulders, heavy keystrokes, or excessive backspacing. Fixing these improves your long-term performance. Three-minute tests teach discipline, rhythmic flow, and consistent accuracy.",
+"A good three-minute test strengthens reading speed, finger control, and mental processing. When your mind stays focused long enough, typing becomes smoother. Instead of typing letter by letter, you begin typing in patterns. This pattern recognition is what skilled typists rely on. Maintaining relaxed posture prevents fatigue and keeps movement fluid. Long passages help eliminate hesitation and build stable speed. Over time your accuracy improves, reducing the need for corrections. The purpose of long tests is not just speed but steady, controlled improvement.",
+"Typing for three minutes improves coordination between your hands and brain. Many learners struggle initially because they focus on speed instead of rhythm. Rhythm is the true key to typing well. Smooth, consistent finger movement increases both accuracy and confidence. Good technique includes relaxed wrists, balanced finger usage, and proper hand positioning. These habits allow comfortable long-duration typing. Practicing three-minute passages improves finger strength and reduces fatigue. With regular dedication, your natural speed gradually increases.",
+"A three-minute test highlights how well you balance speed and accuracy. Many beginners rush too much and make avoidable errors. Long tests train your eyes to track text smoothly and your fingers to follow without hesitation. This builds reading agility and improves typing flow. Relaxing your shoulders and breathing steadily improve control. With practice, you will notice fewer mistakes and smoother transitions. This consistency is more valuable than momentary bursts of speed.",
+"Typing is an essential skill for work, academics, and communication. A three-minute test reveals your typing habits. Do you rely too much on certain fingers? Do you press keys unevenly? Do you hesitate before long words? Identifying such patterns helps you refine technique. Consistent practice leads to stable performance, improving both speed and accuracy. Longer typing tests improve visual scanning, making your eyes move ahead in the text. This enhances overall typing flow.",
+"A three-minute typing passage trains focus and mental endurance. This duration forces your brain to remain active and engaged. Repeated practice strengthens this concentration, making long writing tasks easier. Rhythm is crucial—smooth movement of the hands prevents errors and makes typing feel effortless. Once your finger movements become automatic, your mind can concentrate on the meaning of the text rather than the keys.",
+"Typing for several minutes builds strong muscle memory in your hands. Repetitive patterns become easier to type, reducing hesitation during difficult words. Long tests build confidence and expose habits that need correction. Practicing regularly improves reading comprehension, spelling recognition, and overall writing quality. Your typing speed rises naturally as your accuracy improves.",
+"A well-paced three-minute test trains your mind to read, think, and type simultaneously. This boosts cognitive skills that benefit academic and professional tasks. Smooth typing requires calm focus. Long tests reveal whether you tense your shoulders or press keys too hard. Fixing these habits improves long-term performance.",
+"Typing regularly for three minutes builds stamina and prevents fatigue during long writing sessions. Developing strong rhythm reduces errors and enhances flow. This type of practice helps you stay productive and comfortable at the keyboard.",
+"Three-minute passages also improve your ability to recognize common word patterns. This boosts your reading speed and allows smoother typing. The more familiar patterns you recognize, the faster you type without extra effort.",
+"A three-minute test challenges you to maintain steady performance even when passages become complex. This teaches control, discipline, and smooth pacing. Long passages prepare you for real-world typing tasks.",
+"This test reveals difficult word structures or confusing letter combinations. Practicing these consistently improves your overall typing technique and stability."
+];
+
+
+// ================================
+// 5-MIN (300–350 words each)
+// ================================
+const passages5min = [
+"Typing for five minutes straight is a test of endurance, consistency, and mental clarity. Unlike short typing bursts, which often measure your peak speed, a long passage reveals your true average performance. Over the course of several minutes your fingers must move smoothly across the keyboard while your mind stays focused on reading and processing upcoming words. Many beginners struggle not because they type slowly, but because they lose rhythm midway. This loss of rhythm usually happens when the typist becomes overly conscious of mistakes or feels pressured by the length of the test. Maintaining relaxed posture and steady breathing is essential. Good typing technique relies on muscle memory, allowing fingers to hit keys without deliberate thought. When this happens, your brain can process upcoming words faster, improving both speed and accuracy. A five-minute test highlights fatigue points. If your wrists or fingers feel tense early in the test, your posture may need adjustment. With consistent practice, your endurance improves and your typing becomes more stable. Long passages build discipline and reveal your natural typing rhythm.",
+"Long typing sessions such as a five-minute test train strong mental focus. Typing is not only a physical skill but also a cognitive one. Your eyes must read ahead, your brain must process text, and your fingers must respond instantly. During a long passage, your concentration must stay consistent even when fatigue sets in. Many errors occur when typists rush or become distracted. A steady pace produces better results than forced speed. Each person has unique strengths and weaknesses, and long tests reveal them clearly. Some struggle with letter pairs, others with long words or punctuation. Identifying these weaknesses is the first step toward improvement. With targeted practice, you strengthen difficult areas and build balanced typing ability. Long tests develop endurance, accuracy, and rhythm—all crucial for professional typing tasks.",
+"Typing for five continuous minutes reflects real-world typing demands. When writing essays, preparing reports, or coding, you type for extended periods—not just short bursts. Your fingers must move naturally while your mind stays focused. Beginners often lose concentration before their hands become tired. Practicing long passages trains your brain to stay alert. Poor posture can also affect endurance. Leaning forward or tightening shoulders reduces stamina and increases errors. Keeping your body relaxed improves typing comfort. Over weeks of practice, your typing becomes more natural, your accuracy improves, and your speed stabilizes. Long tests teach consistency, discipline, and correct typing habits.",
+"A five-minute passage reveals the true quality of your typing technique. Speed matters, but rhythm is more important. Beginners often start fast but slow down once errors accumulate. This happens because they focus too much on speed rather than comfortable rhythm. Skilled typists maintain steady flow. Reading ahead in small chunks improves anticipation and reduces hesitation. Long tests also strengthen finger endurance. Each finger becomes more responsive and efficient after repeated movement. Practicing long passages regularly builds comfort and fluency.",
+"Typing for five minutes can feel intense, but it is one of the most effective training methods. Long tests shift your brain from conscious typing to automatic response. This transition builds true typing fluency. Hesitation during unfamiliar word patterns is normal, but repeated exposure reduces these pauses. Long passages reveal habits such as pressing keys too hard, using backspace excessively, or moving hands unnecessarily. Fixing these habits improves your overall typing performance. Proper posture is essential: relaxed shoulders, neutral wrists, and light keystrokes reduce fatigue. Practicing long passages builds stamina, accuracy, and smooth motion.",
+"Long-duration tests strengthen mental focus. Typing is repetitive physically but engaging mentally. Even small distractions break rhythm. Longer tests train your mind to stay active. Your eyes learn to scan ahead while your fingers type current words. This dual focus improves coordination and makes typing smoother. Over time, your speed stabilizes and your errors decrease. Endurance is built slowly, but once developed, it greatly enhances typing performance.",
+"Typing continuously for five minutes enhances muscle memory. At first, beginners rely too much on looking at the keyboard or thinking about key placement. Over time, fingers move automatically, reducing stress on the mind. Long tests expose fatigue or tension. If your fingers become tired quickly, lighten your keystrokes or adjust posture. Experienced typists focus on flow instead of raw speed. Long tests build confidence and consistency.",
+"A five-minute passage encourages refined typing technique. Short tests measure burst speed, but long tests measure sustained performance. Your brain learns to process words faster while your fingers respond automatically. Many typists tense their hands unknowingly, slowing performance. Relaxing your grip improves both speed and endurance. Avoid excessive backspacing; it interrupts flow. Long passages highlight your natural rhythm and help you refine movement. With steady practice, your stamina, reading agility, and accuracy improve.",
+"A five-minute test demonstrates how rhythm affects typing. Smooth, predictable motion is more efficient than fast, inconsistent bursts. Typists who lose rhythm often struggle with long passages. Establishing consistent movement prevents fatigue. Long passages also improve reading flow as your eyes begin scanning ahead naturally. Practicing extended tests builds endurance required for academic or professional typing tasks.",
+"A five-minute assessment accurately measures typing ability. Short tests cannot reveal your true average speed. Long passages require steady attention and reliable typing technique. Your posture, typing pressure, and finger control all influence your results. Maintaining relaxed wrists and shoulders improves comfort and reduces errors. Over time, long tests strengthen finger endurance and improve rhythm.",
+"Typing for five minutes helps your brain enter a flow state. Thoughts, eyes, and fingers begin working together seamlessly. This state cannot be achieved in short tests. Long passages force your brain to stay engaged, strengthening attention. You begin recognizing word shapes, improving reading and typing speed simultaneously.",
+"A five-minute passage challenges both mental and physical aspects of typing. Long tests reveal posture issues, unnecessary tension, and overuse of backspace. Fixing these improves long-term typing comfort. Typists who stay calm and accept occasional mistakes perform better.",
+"Typing several hundred words in five minutes strengthens cognitive endurance. Long passages reveal subtle habits like pressing keys too hard or hesitating before uncommon words. Correcting these improves typing fluency. Over time, typing feels lighter, faster, and more controlled.",
+"A five-minute typing session builds discipline. Continuous movement trains finger endurance and mental focus. Long tests highlight whether your typing rhythm is stable or needs improvement. Practicing extended passages increases confidence, helping you type long documents comfortably.",
+"Long tests train consistency. Five-minute practice sessions strengthen accuracy, boost stamina, and reveal your real typing capability. Early fatigue is normal, but repeated practice dramatically improves comfort and performance."
+];
+
+
+// ============= VARIABLES =============
+let selectedTime = 60;
+let timeLeft = 60;
+let timer = null;
+let started = false;
+
+let promptArr = [];
+let typedArr = [];
+let currentIndex = 0;
+
+let errors = 0;
+let correct = 0;
+
+// HTML elements
+const promptBox = document.getElementById("prompt");
+const input = document.getElementById("input");
+const timerEl = document.getElementById("timer");
+const wpmEl = document.getElementById("wpm");
+const accEl = document.getElementById("accuracy");
+const errEl = document.getElementById("errors");
+
+
+// LOAD RANDOM PASSAGE
+function loadParagraph(){
+  let data;
+
+  if(selectedTime === 60) data = passages1min;
+  else if(selectedTime === 180) data = passages3min;
+  else data = passages5min;
+
+  if(!data || data.length === 0){
+    promptBox.innerHTML = "⚠️ ERROR: Passages not loaded!";
+    return;
+  }
+
+  const paragraph = data[Math.floor(Math.random() * data.length)];
+
+  promptArr = paragraph.split("");
+  typedArr = [];
+  currentIndex = 0;
+
+  renderPrompt();
+}
+
+
+// RENDER PROMPT
+function renderPrompt(){
+  promptBox.innerHTML = "";
+
+  promptArr.forEach((char, i)=>{
+    const span = document.createElement("span");
+
+    if(typedArr[i] == null){
+      span.textContent = char;
+    } else if(typedArr[i] === char){
+      span.textContent = char;
+      span.classList.add("correct");
+    } else {
+      span.textContent = char;
+      span.classList.add("incorrect");
+    }
+
+    if(i === currentIndex){
+      span.classList.add("current-char");
+    }
+
+    promptBox.appendChild(span);
+  });
+
+  // AUTO SCROLL
+  const cur = document.querySelector(".current-char");
+  if(cur) cur.scrollIntoView({ behavior:"smooth", block:"center" });
+}
+
+
+// TIME BUTTONS
+document.querySelectorAll(".chip").forEach(btn=>{
+  btn.onclick = () => {
+    document.querySelectorAll(".chip").forEach(c=>c.classList.remove("active"));
+    btn.classList.add("active");
+
+    selectedTime = Number(btn.dataset.time);
+    timeLeft = selectedTime;
+    timerEl.textContent = timeLeft;
+
+    resetTest(false);
+  }
+});
+
+
+// START TEST
+document.getElementById("startBtn").onclick = () => {
+  if(started) return;
+
+  started = true;
+  input.disabled = false;
+  input.value = "";
+  input.focus();
+
+  timer = setInterval(()=>{
+    timeLeft--;
+    timerEl.textContent = timeLeft;
+
+    if(timeLeft <= 0){
+      finishTest();
+    }
+  },1000);
+};
+
+
+// RESET TEST
+document.getElementById("resetBtn").onclick = () => resetTest(true);
+
+function resetTest(full){
+  clearInterval(timer);
+  started = false;
+
+  if(full){
+    timeLeft = selectedTime;
+    timerEl.textContent = timeLeft;
+    wpmEl.textContent = 0;
+    accEl.textContent = "0%";
+    errEl.textContent = 0;
+  }
+
+  input.disabled = true;
+  input.value = "";
+  errors = 0;
+  correct = 0;
+
+  loadParagraph();
+}
+
+
+// TYPE HANDLING
+input.oninput = () => {
+  if(!started) return;
+
+  typedArr = input.value.split("");
+
+  if(typedArr.length > promptArr.length){
+    typedArr.pop();
+  }
+
+  errors = 0;
+  correct = 0;
+
+  typedArr.forEach((t,i)=>{
+    if(t === promptArr[i]) correct++;
+    else errors++;
+  });
+
+  currentIndex = typedArr.length;
+
+  renderPrompt();
+};
+
+
+// FINISH TEST
+function finishTest(){
+  clearInterval(timer);
+  started = false;
+  input.disabled = true;
+
+  const gross = typedArr.length / 5;
+  const minutes = selectedTime / 60;
+
+  const wpm = Math.round(gross / minutes);
+  const acc = Math.round((correct / typedArr.length) * 100);
+
+  wpmEl.textContent = wpm || 0;
+  accEl.textContent = (acc || 0) + "%";
+  errEl.textContent = errors;
+}
+
+</script>
+
+</body>
+</html>
